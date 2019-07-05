@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zabbix Widget</title>
+    <style type="text/css">
+        .s_titre
+        {
+            float: left;
+            width: 65%;
+            padding-left: 3%;
+        }
+        .picto
+        {
+            float: left;
+            width: 30%;
+        }
+        .block_lst
+        {
+            float: left;
+        }
+        .lst
+        {
+             list-style-type: none;
+             padding-inline-start: 0;
+        }
+        label
+        {
+            text-decoration:underline;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        {% if description_dict.Batiment and  description_dict.Type%}
+            <img src="..\img\picto\{{description_dict.Type}}\{{description_dict.Batiment}}.png" class="picto">
+        {% endif %}
+        <h2 class="s_titre">{{description_dict.Titre}} ({{description_dict.Type}})</h2>
+    </div>
+    
+    <div class="block_lst">        
+        <ul class="lst">
+            {% for label,description in description_dict.items() %} 
+                {% if label != "Titre" and label != "Batiment" and label != "Type" and label != "Consommation" and label != "Production"%}
+                    <li><label>{{ label }}</label> : {{ description }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+        {% if description_dict.Consommation%}
+            <h4><label>Consommation annuelle</label> : {{ description_dict.Consommation }} kWh/an</h4>
+        {% endif %}
+        {% if description_dict.Production %}
+            <h4><label>Production annuelle</label> : {{ description_dict.Production }} kWh/an</h4>
+        {% endif %}
+    </div>
+</body>
+</html>
+
